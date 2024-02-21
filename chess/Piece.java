@@ -1,5 +1,7 @@
 package chess;
 
+//Defines All Pieces In Chess
+
 public abstract class Piece {
     
     Color color;
