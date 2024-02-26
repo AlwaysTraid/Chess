@@ -1,7 +1,6 @@
 package chess;
 
-import chess.Board;
-import chess.Color;
+import chess.*;
 
 public class King extends Piece{
     

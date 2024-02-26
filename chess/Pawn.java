@@ -1,6 +1,5 @@
 package chess;
-import chess.Board;
-import chess.Color;
+import chess.*;
 
 public class Pawn extends Piece{
     boolean hasPassantAvailable = true;

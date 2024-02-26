@@ -1,4 +1,5 @@
 package chess;
+import chess.*;
 
 //Defines All Pieces In Chess
 

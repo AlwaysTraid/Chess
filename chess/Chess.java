@@ -4,7 +4,8 @@ package chess;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import chess.Board;
+import chess.*;
+
 
 class ReturnPiece {
 	static enum PieceType {WP, WR, WN, WB, WQ, WK, 

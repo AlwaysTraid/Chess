@@ -2,9 +2,7 @@ package chess;
 
 import java.util.ArrayList;
 import java.util.List;
-import chess.Color;
-import chess.Piece;
-import chess.Rook;
+import chess.*;
 
 public class Board {
 
@@ -38,7 +36,11 @@ public class Board {
                 if (i == 0 || i == 7) {
                     setupBackRow(i, j);
                 } else if (i == 1 || i == 6) {
-                    ChessBoard[i][j].piece = new Pawn(i == 1);
+                    if (i == 1){
+                        ChessBoard[i][j] = new Pawn(Color.WHITE, i, j, true);
+                    }else{
+                        ChessBoard[i][j] = new Pawn(Color.BLACK, i, j, true);
+                    }
                 }
             }
         }
@@ -46,15 +48,35 @@ public class Board {
 
     private static void setupBackRow(int row, int col) {
         if (col == 0 || col == 7) {
-            ChessBoard[row][col].piece = new Rook(row == 0);
+            if (row == 0) {
+                ChessBoard[row][col] = new Rook(Color.WHITE, row, col);
+            }else{
+                ChessBoard[row][col] = new Rook(Color.BLACK, row, col);
+            }    
         } else if (col == 1 || col == 6) {
-            ChessBoard[row][col].piece = new Knight(row == 0);
+            if (row == 0) {
+                ChessBoard[row][col] = new Knight(Color.WHITE, row, col);
+            }else{
+                ChessBoard[row][col] = new Knight(Color.BLACK, row, col);
+            }   
         } else if (col == 2 || col == 5) {
-            ChessBoard[row][col].piece = new Bishop(row == 0);
+            if (row == 0) {
+                ChessBoard[row][col] = new Bishop(Color.WHITE, row, col);
+            }else{
+                ChessBoard[row][col] = new Bishop(Color.BLACK, row, col);
+            }   
         } else if (col == 3) {
-            ChessBoard[row][col].piece = new Queen(row == 0);
+            if (row == 0) {
+                ChessBoard[row][col] = new Queen(Color.WHITE, row, col);
+            }else{
+                ChessBoard[row][col] = new Queen(Color.BLACK, row, col);
+            }   
         } else if (col == 4) {
-            ChessBoard[row][col].piece = new King(row == 0);
+            if (row == 0) {
+                ChessBoard[row][col] = new King(Color.WHITE, row, col, true);
+            }else{
+                ChessBoard[row][col] = new King(Color.BLACK, row, col, true);
+            }   
         }
     }
 
@@ -62,8 +84,20 @@ public class Board {
         return (isBlackTurn) ? Color.BLACK : Color.WHITE;
     }
 
-    public static Piece GetPiece() {
+    public static Piece GetPiece(String pos) {
+        return new Piece(Color.WHITE, 0, 0);
+    }
 
+    public static boolean ExistingSpotOnBoard(String pos){
+        for(char row = 'a'; row <= 'h'; row++) {
+            if (pos.charAt(0) == row)
+                for(int num = 1; num <= 8; num++) {
+                    if(pos.charAt(1) == num){
+                        return true;
+                    }
+                }
+        }
+        return false;
     }
 
     private static boolean isSquareUnderAttack(Color player, ChessCoordinatePair square) {
@@ -73,7 +107,7 @@ public class Board {
                 Piece boardSquare = ChessBoard[i][j];
                 if (boardSquare.isOccupied() && boardSquare.piece.isBlack != (player == Color.BLACK)) {
                    
-                    ArrayList<ChessCoordinatePair> moves = boardSquare.piece.deepestMovesFrom(new ChessCoordinatePair(i, j));
+                    ArrayList<Piece> moves = boardSquare.deepestMovesFrom(new Piece(i, j));
                    
                     if (moves.contains(square)) {
                         return true;
@@ -84,14 +118,14 @@ public class Board {
         return false;
     }
 
-    private static ChessCoordinatePair getKingSquare(Color player) {
+    private static Piece getKingSquare(Color player) {
        
         for (int i = 0; i < ChessBoard.length; i++) {
             for (int j = 0; j < ChessBoard[i].length; j++) {
                 Piece boardSquare = ChessBoard[i][j];
                 if (boardSquare.isOccupied() && boardSquare.piece instanceof King && boardSquare.piece.isBlack == (player == Color.BLACK)) {
                     
-                    return new ChessCoordinatePair(i, j);
+                    return new Piece(i, j);
                 }
             }
         }

@@ -1,7 +1,6 @@
 package chess;
 
-import chess.Board;
-import chess.Color;
+import chess.*;
 
 public class Rook extends Piece
 {
@@ -15,7 +14,7 @@ public class Rook extends Piece
             (oldPos.charAt(0) == newPos.charAt(0) || oldPos.charAt(1) == newPos.charAt(1)) ||
             (newPos.equals(oldPos))
         ){
-            if (Board.Get(newPos).equals(" ") || Board.Get(newPos).equals("##")){
+            if (Board.GetPiece(newPos) instanceof BlankSpace){
                 if (canTravel(oldPos, newPos)){
                     return true;
                 }
