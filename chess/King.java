@@ -1,5 +1,8 @@
 package chess;
 
+import chess.Board;
+import chess.Color;
+
 public class King extends Piece{
     
     boolean canCastle;

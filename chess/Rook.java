@@ -1,5 +1,8 @@
 package chess;
 
+import chess.Board;
+import chess.Color;
+
 public class Rook extends Piece
 {
     public Rook(Color color, int row, int col){

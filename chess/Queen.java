@@ -1,6 +1,7 @@
 package chess;
 
 import chess.Board;
+import chess.Color;
 
 public class Queen extends Piece{
 

@@ -1,5 +1,8 @@
 package chess;
 
+import chess.Board;
+import chess.Color;
+
 public class Bishop extends Piece{
 
     public Bishop(Color color, int row, int col){
