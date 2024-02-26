@@ -67,7 +67,7 @@ public class Chess {
 	public static void start() {
 		/* FILL IN THIS METHOD */
 
-		Board.SetupBoard();
+		Board.setupBoard();
 		Scanner input = new Scanner(System.in);
 		String response;
 
@@ -94,6 +94,8 @@ public class Chess {
 				} else{
 					System.out.println("Black Resigns. White Wins!");
 				}
+			}else{
+				//Any other input
 			}
 		}
 		

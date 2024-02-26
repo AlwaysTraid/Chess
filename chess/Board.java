@@ -1,129 +1,38 @@
+package chess;
+
 import java.util.ArrayList;
+import java.util.List;
+import chess.Color;
+import chess.Piece;
+import chess.Rook;
 
 public class Board {
 
-    static class ChessCoordinatePair {
-        int rank;
-        int file;
-
-        public ChessCoordinatePair(int rank, int file) {
-            this.rank = rank;
-            this.file = file;
-        }
-    }
-
-    static abstract class Piece {
-        boolean isBlack;
-
-        public abstract ArrayList<ChessCoordinatePair> deepestMovesFrom(ChessCoordinatePair startAddress);
-    }
-
-    static class Pawn extends Piece {
-        public Pawn(boolean isBlack) {
-            this.isBlack = isBlack;
-        }
-
-        @Override
-        public ArrayList<ChessCoordinatePair> deepestMovesFrom(ChessCoordinatePair startAddress) {
-            return new ArrayList<>();
-        }
-    }
-
-    static class Rook extends Piece {
-        public Rook(boolean isBlack) {
-            this.isBlack = isBlack;
-        }
-
-        @Override
-        public ArrayList<ChessCoordinatePair> deepestMovesFrom(ChessCoordinatePair startAddress) {
-            return new ArrayList<>();
-        }
-    }
-
-    static class Knight extends Piece {
-        public Knight(boolean isBlack) {
-            this.isBlack = isBlack;
-        }
-
-        @Override
-        public ArrayList<ChessCoordinatePair> deepestMovesFrom(ChessCoordinatePair startAddress) {
-            return new ArrayList<>();
-        }
-    }
-
-    static class Bishop extends Piece {
-        public Bishop(boolean isBlack) {
-            this.isBlack = isBlack;
-        }
-
-        @Override
-        public ArrayList<ChessCoordinatePair> deepestMovesFrom(ChessCoordinatePair startAddress) {
-            return new ArrayList<>();
-        }
-    }
-
-    static class Queen extends Piece {
-        public Queen(boolean isBlack) {
-            this.isBlack = isBlack;
-        }
-
-        @Override
-        public ArrayList<ChessCoordinatePair> deepestMovesFrom(ChessCoordinatePair startAddress) {
-            return new ArrayList<>();
-        }
-    }
-
-    static class King extends Piece {
-        public King(boolean isBlack) {
-            this.isBlack = isBlack;
-        }
-
-        @Override
-        public ArrayList<ChessCoordinatePair> deepestMovesFrom(ChessCoordinatePair startAddress) {
-            return new ArrayList<>();
-        }
-    }
-
-    static class ChessBoardSquare {
-        Piece piece;
-
-        public ChessBoardSquare(ChessCoordinatePair coordinatePair) {
-            this.piece = null;
-        }
-
-        public boolean isOccupied() {
-            return piece != null;
-        }
-
-        @Override
-        public String toString() {
-            return (piece != null) ? piece.getClass().getSimpleName() : "-";
-        }
-    }
-
-    static class ChessNamingConstants {
-        public static final String ROOK = "ROOK";
-        public static final String KNIGHT = "KNIGHT";
-        public static final String BISHOP = "BISHOP";
-    }
-
+    public static boolean isBlackTurn = true;
+    public static int moveCount = 0;
+    public static Piece[][] ChessBoard;
     public static int rows = 8;
     public static int cols = 8;
-    public boolean isBlackTurn = true;
-    public int moveCount = 0;
-    public ChessBoardSquare[][] ChessBoard;
 
-    public Board() {
-        ChessBoard = new ChessBoardSquare[rows][cols];
+    public static void setupBoard() {
+        ChessBoard = new Piece[rows][cols];
         for (int i = 0; i < ChessBoard.length; i++) {
             for (int j = 0; j < ChessBoard[i].length; j++) {
-                ChessBoard[i][j] = new ChessBoardSquare(new ChessCoordinatePair(i, j));
+                ChessBoard[i][j] = new BlankSpace(Color.WHITE, i, j);
             }
         }
         setupStandardBoard();
     }
 
-    private void setupStandardBoard() {
+    public static Color GetMove(){
+        if (isBlackTurn){
+            return Color.BLACK;
+        }else{
+            return Color.WHITE;
+        }
+    }
+
+    private static void setupStandardBoard() {
         for (int i = 0; i < ChessBoard.length; i++) {
             for (int j = 0; j < ChessBoard[i].length; j++) {
                 if (i == 0 || i == 7) {
@@ -135,7 +44,7 @@ public class Board {
         }
     }
 
-    private void setupBackRow(int row, int col) {
+    private static void setupBackRow(int row, int col) {
         if (col == 0 || col == 7) {
             ChessBoard[row][col].piece = new Rook(row == 0);
         } else if (col == 1 || col == 6) {
@@ -149,101 +58,99 @@ public class Board {
         }
     }
 
-    public boolean getIsBlackTurn() {
-        return !isBlackTurn;
+    public static Color getMove() {
+        return (isBlackTurn) ? Color.BLACK : Color.WHITE;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder str = new StringBuilder();
+    public static Piece GetPiece() {
+
+    }
+
+    private static boolean isSquareUnderAttack(Color player, ChessCoordinatePair square) {
+       
         for (int i = 0; i < ChessBoard.length; i++) {
             for (int j = 0; j < ChessBoard[i].length; j++) {
-                str.append(ChessBoard[i][j].toString()).append(" ");
-            }
-            str.append(i + 1).append("\n");
-        }
-        str.append(" a  b  c  d  e  f  g  h\n");
-        return str.toString();
-    }
-
-    private void move(ChessCoordinatePair startAddress, ChessCoordinatePair endAddress) {
-        ChessBoard[endAddress.rank][endAddress.file].piece = ChessBoard[startAddress.rank][startAddress.file].piece;
-        ChessBoard[startAddress.rank][startAddress.file].piece = null;
-        moveCount++;
-        isBlackTurn = (moveCount % 2 == 0);
-    }
-
-    private Piece getChessPieceFrom(String CHESS_PIECE_CONSTANT) {
-        if (CHESS_PIECE_CONSTANT.equals(ChessNamingConstants.ROOK)) {
-            return new Rook(!isBlackTurn);
-        } else if (CHESS_PIECE_CONSTANT.equals(ChessNamingConstants.KNIGHT)) {
-            return new Knight(!isBlackTurn);
-        } else if (CHESS_PIECE_CONSTANT.equals(ChessNamingConstants.BISHOP)) {
-            return new Bishop(!isBlackTurn);
-        } else {
-            return new Queen(!isBlackTurn);
-        }
-    }
-
-    private boolean kingIsInCheck() {
-        for (int currentRank = 0; currentRank < ChessBoard.length; currentRank++) {
-            for (int currentFile = 0; currentFile < ChessBoard[currentRank].length; currentFile++) {
-                if (ChessBoard[currentRank][currentFile].isOccupied() && ChessBoard[currentRank][currentFile].piece.isBlack == isBlackTurn) {
-                    return isPieceCollidingWithKingAt(currentRank, currentFile);
+                Piece boardSquare = ChessBoard[i][j];
+                if (boardSquare.isOccupied() && boardSquare.piece.isBlack != (player == Color.BLACK)) {
+                   
+                    ArrayList<ChessCoordinatePair> moves = boardSquare.piece.deepestMovesFrom(new ChessCoordinatePair(i, j));
+                   
+                    if (moves.contains(square)) {
+                        return true;
+                    }
                 }
             }
         }
         return false;
     }
 
-    private boolean isPieceCollidingWithKingAt(int rank, int file) {
-        Piece cp = ChessBoard[rank][file].piece;
-        ChessCoordinatePair startAddress = new ChessCoordinatePair(rank, file);
-        ArrayList<ChessCoordinatePair> deepestMoves = cp.deepestMovesFrom(startAddress);
-        for (ChessCoordinatePair deepestMove : deepestMoves) {
-            if (kingIsFirstCollisionInPathBetween(startAddress, deepestMove)) {
-                return true;
+    private static ChessCoordinatePair getKingSquare(Color player) {
+       
+        for (int i = 0; i < ChessBoard.length; i++) {
+            for (int j = 0; j < ChessBoard[i].length; j++) {
+                Piece boardSquare = ChessBoard[i][j];
+                if (boardSquare.isOccupied() && boardSquare.piece instanceof King && boardSquare.piece.isBlack == (player == Color.BLACK)) {
+                    
+                    return new ChessCoordinatePair(i, j);
+                }
             }
+        }
+        return null; 
+    }
+
+    private static List<Move> getLegalMoves(Color player) {
+        List<Move> legalMoves = new ArrayList<>();
+        
+        for (int i = 0; i < ChessBoard.length; i++) {
+            for (int j = 0; j < ChessBoard[i].length; j++) {
+                Piece boardSquare = ChessBoard[i][j];
+                if (boardSquare.isOccupied() && boardSquare.piece.isBlack == (player == Color.BLACK)) {
+                    
+                    ArrayList<ChessCoordinatePair> moves = boardSquare.piece.deepestMovesFrom(new ChessCoordinatePair(i, j));
+                   
+                    for (ChessCoordinatePair move : moves) {
+                        legalMoves.add(new Move(boardSquare.piece, new ChessCoordinatePair(i, j), move));
+                    }
+                }
+            }
+        }
+        return legalMoves;
+    }
+
+    public static boolean isCheckmate(Color player) {
+        if (isCheck(player) && !hasLegalMoves(player)) {
+            return true;
         }
         return false;
     }
 
-    private boolean kingIsFirstCollisionInPathBetween(ChessCoordinatePair start, ChessCoordinatePair end) {
-        int startRank = start.rank;
-        int startFile = start.file;
-        int endRank = end.rank;
-        int endFile = end.file;
-
-        // Horizontal
-        if (startRank == endRank) {
-            int startFileStep = (startFile < endFile) ? 1 : -1;
-            for (int file = startFile + startFileStep; file != endFile; file += startFileStep) {
-                if (ChessBoard[startRank][file].isOccupied()) {
-                    return true;
-                }
-            }
-        }
-
-        // Vertical
-        else if (startFile == endFile) {
-            int startRankStep = (startRank < endRank) ? 1 : -1;
-            for (int rank = startRank + startRankStep; rank != endRank; rank += startRankStep) {
-                if (ChessBoard[rank][startFile].isOccupied()) {
-                    return true;
-                }
-            }
-        }
-
-        // Diagonal
-        else if (Math.abs(startRank - endRank) == Math.abs(startFile - endFile)) {
-            int startRankStep = (startRank < endRank) ? 1 : -1;
-            int startFileStep = (startFile < endFile) ? 1 : -1;
-            for (int rank = startRank + startRankStep, file = startFile + startFileStep; rank != endRank && file != endFile; rank += startRankStep, file += startFileStep) {
-                if (ChessBoard[rank][file].isOccupied()) {
-                    return true;
-                }
-            }
-        }
-        return false;
+    private static boolean isCheck(Color player) {
+        ChessCoordinatePair kingSquare = getKingSquare(player);
+        return isSquareUnderAttack(player, kingSquare);
     }
+
+    private static boolean hasLegalMoves(Color player) {
+        List<Move> legalMoves = getLegalMoves(player);
+        return !legalMoves.isEmpty();
+    }
+
+    private static boolean isKingUnderAttack(Color player) {
+        ChessCoordinatePair kingSquare = getKingSquare(player);
+        return isSquareUnderAttack(player.getOpponentColor(), kingSquare);
+    }
+
+    static class Move {
+        Piece piece;
+        ChessCoordinatePair start;
+        ChessCoordinatePair end;
+
+        public Move(Piece piece, ChessCoordinatePair start, ChessCoordinatePair end) {
+            this.piece = piece;
+            this.start = start;
+            this.end = end;
+        }
+    }
+
+
+
 }

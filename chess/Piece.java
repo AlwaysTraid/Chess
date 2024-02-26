@@ -2,7 +2,7 @@ package chess;
 
 //Defines All Pieces In Chess
 
-public abstract class Piece {
+public class Piece {
     
     Color color;
     int row;
@@ -27,7 +27,13 @@ public abstract class Piece {
         this.moved = hasMoved;
     }
 
-    public abstract boolean ableToMove(String oldPos, String newPos);
-    public abstract void move(String oldPos, String newPos);
-    public abstract boolean canTravel(String oldPos, String newPos);
+    public boolean ableToMove(String oldPos, String newPos){
+        return true;
+    }
+    public void move(String oldPos, String newPos){
+
+    }
+    public boolean canTravel(String oldPos, String newPos){
+        return true;
+    }
 }
