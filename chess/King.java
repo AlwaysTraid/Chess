@@ -17,11 +17,22 @@ public class King extends Piece{
         this.canCastle = setCastle;
     }
 
-    public boolean ableToMove(){
-        return true;
+    public boolean ableToMove(String oldPos, String newPos){
+        if (
+        (oldPos.charAt(1) <= newPos.charAt(1)) ||
+        (oldPos.charAt(1) >= newPos.charAt(1))
+        ){
+            if (Board.GetPiece(oldPos).getColor() == Board.GetPiece(newPos).getColor()){
+                return false;
+            } 
+            return true;
+        }else{
+            return false;
+        }
+        
     }
 
-    public void move(){
+    public void move(String oldPos, String newPos){
         
     }
     

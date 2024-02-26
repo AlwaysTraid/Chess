@@ -27,6 +27,7 @@ public abstract class Piece {
         this.moved = hasMoved;
     }
 
-    public abstract boolean ableToMove(/*Spot, Declared Spot */);
-    public abstract void move(/*Spot, Declared Spot */);
+    public abstract boolean ableToMove(String oldPos, String newPos);
+    public abstract void move(String oldPos, String newPos);
+    public abstract boolean canTravel(String oldPos, String newPos);
 }

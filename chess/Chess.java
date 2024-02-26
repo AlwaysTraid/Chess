@@ -3,6 +3,8 @@ package chess;
 // Submission By: Aryan Rejo (NetID: ar1856) & Sania Khumbare(NetID: ssk208)
 
 import java.util.ArrayList;
+import java.util.Scanner;
+import chess.Board;
 
 class ReturnPiece {
 	static enum PieceType {WP, WR, WN, WB, WQ, WK, 
@@ -64,5 +66,36 @@ public class Chess {
 	 */
 	public static void start() {
 		/* FILL IN THIS METHOD */
+
+		Board.SetupBoard();
+		Scanner input = new Scanner(System.in);
+		String response;
+
+		while (true){
+			if (Board.GetMove() == Color.WHITE){
+				System.out.print("White To Move: ");
+				response = input.nextLine();
+			}else{
+				System.out.print("Black To Move: ");
+				response = input.nextLine();
+			}
+			
+			if(response.equals("draw")){
+				if (Board.GetMove() == Color.WHITE){
+					System.out.println("Draw Was Offered By White.");
+					System.out.println("Draw was Accepted By Black.");
+				} else{
+					System.out.println("Draw Was Offered By Black.");
+					System.out.println("Draw was Accepted By White.");
+				}
+			}else if (response.equals("resign")){
+				if (Board.GetMove() == Color.WHITE){
+					System.out.println("White Resigns. Black Wins!");
+				} else{
+					System.out.println("Black Resigns. White Wins!");
+				}
+			}
+		}
+		
 	}
 }

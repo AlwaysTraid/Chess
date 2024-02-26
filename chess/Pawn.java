@@ -1,4 +1,6 @@
 package chess;
+import chess.Board;
+import chess.Color;
 
 public class Pawn extends Piece{
     boolean hasPassantAvailable = true;
@@ -16,11 +18,43 @@ public class Pawn extends Piece{
         return this.hasPassantAvailable;
     }
 
-    public boolean ableToMove(){
-        return true;
+    public boolean ableToMove(String oldPos, String newPos){
+        if(Board.GetPiece(oldPos).getColor() == Color.WHITE){
+            if(oldPos.charAt(1) >= newPos.charAt(1)){
+                return false;
+            }else{
+                if (newPos.charAt(1) - oldPos.charAt(1) != 1){
+                    return false;
+                }
+                if (Board.GetPiece(oldPos).getColor() == Board.GetPiece(newPos).getColor()){
+                    return false;
+                }
+                if (canTravel(oldPos, newPos))
+                    return true;
+                else
+                    return false;
+            }
+        }else{
+            //Piece is Color.BLACK
+            if (oldPos.charAt(1) <= newPos.charAt(1)){
+                return false;
+            }
+            else{
+                if (oldPos.charAt(1) - newPos.charAt(1) != 1){
+                    return false;
+                }
+                if (Board.GetPiece(oldPos).getColor() == Board.GetPiece(newPos).getColor()){
+                    return false;
+                }
+                if (canTravel(oldPos, newPos))
+                    return true;
+                else
+                    return false;
+            }
+        }
     }
 
-    public void move(){
+    public void move(String oldPos, String newPos){
         
     }
 }

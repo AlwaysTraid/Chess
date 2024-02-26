@@ -6,11 +6,36 @@ public class Bishop extends Piece{
         super(color, row, col);
     }
 
-    public boolean ableToMove(){
-        return true;
+    public boolean ableToMove(String oldPos, String newPos){
+        if (
+        (Math.abs(oldPos.charAt(0) - newPos.charAt(0)) == Math.abs(oldPos.charAt(1) - newPos.charAt(1))) ||
+        (newPos.equals(oldPos))
+        ){
+            if (Board.Get(newPos).equals(" ") || Board.Get(newPos).equals("##")){
+                if (canTravel(oldPos, newPos)){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }else {
+                if (Board.GetPiece(oldPos).getColor() == Board.GetPiece(newPos).getColor()){
+                    return false;
+                }
+                else if (canTravel(oldPos, newPos)){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+        else{
+            return false;
+        }
     }
 
-    public void move(){
+    public void move(String oldPos, String newPos){
         
     }
 }
