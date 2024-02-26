@@ -1,6 +1,6 @@
 package chess;
 
-// Submission By: Aryan Rejo (NetID: ar1856) & Sania Khumbare(NetID: ssk208)
+// Submission By: Aryan Rejo (NetID: ar1856) & Sania Kumbhare(NetID: ssk208)
 
 import java.util.ArrayList;
 import java.util.Scanner;
