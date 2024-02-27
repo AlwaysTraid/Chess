@@ -7,16 +7,21 @@ import java.util.*;
 public class Piece {
     
     Color color;
+    String display;
     int row;
     int col;
     boolean moved;
 
     public Piece(String display, Color color, int row, int col){
+        this.display = display;
         this.color = color;
         this.row = row;
         this.col = col;
     }
     
+    public String getDisplay(){
+        return this.display;
+    }
     public Color getColor(){
         return this.color;
     }
