@@ -1,11 +1,12 @@
 package chess;
 
 import chess.*;
+import java.util.*;
 
 public class Rook extends Piece
 {
-    public Rook(Color color, int row, int col){
-        super(color, row, col);
+    public Rook(String display, Color color, int row, int col){
+        super(display, color, row, col);
     }
 
 

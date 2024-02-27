@@ -2,8 +2,8 @@ package chess;
 
 public class BlankSpace extends Piece{
     
-    public BlankSpace(Color color, int row, int col){
-        super(color, row, col);
+    public BlankSpace(String display, Color color, int row, int col){
+        super(display, color, row, col);
     }
 
     @Override
@@ -22,5 +22,10 @@ public class BlankSpace extends Piece{
     public boolean canTravel(String oldPos, String newPos) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'canTravel'");
+    }
+
+    @Override
+    public boolean isOccupied(){
+        return false;
     }
 }

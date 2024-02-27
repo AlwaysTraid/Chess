@@ -4,8 +4,8 @@ import chess.*;
 
 public class Queen extends Piece{
 
-    public Queen(Color color, int row, int col){
-        super(color, row, col);
+    public Queen(String display, Color color, int row, int col){
+        super(display, color, row, col);
     }
 
     public boolean ableToMove(String oldPos, String newPos){

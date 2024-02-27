@@ -6,8 +6,8 @@ public class King extends Piece{
     
     boolean canCastle;
 
-    public King(Color color, int row, int col, boolean canCastle){
-        super(color, row, col);
+    public King(String display, Color color, int row, int col, boolean canCastle){
+        super(display, color, row, col);
         this.canCastle = canCastle;
     }
 

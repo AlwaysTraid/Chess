@@ -5,8 +5,8 @@ import chess.Color;
 
 public class Bishop extends Piece{
 
-    public Bishop(Color color, int row, int col){
-        super(color, row, col);
+    public Bishop(String display, Color color, int row, int col){
+        super(display, color, row, col);
     }
 
     public boolean ableToMove(String oldPos, String newPos){

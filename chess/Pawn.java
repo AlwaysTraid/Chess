@@ -4,8 +4,8 @@ import chess.*;
 public class Pawn extends Piece{
     boolean hasPassantAvailable = true;
 
-    public Pawn(Color color, int row, int col, boolean hasPassantAvailable){
-        super(color, row, col);
+    public Pawn(String display, Color color, int row, int col, boolean hasPassantAvailable){
+        super(display, color, row, col);
         this.hasPassantAvailable = hasPassantAvailable;
     }
 

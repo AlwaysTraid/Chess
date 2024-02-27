@@ -1,5 +1,6 @@
 package chess;
 import chess.*;
+import java.util.*;
 
 //Defines All Pieces In Chess
 
@@ -10,7 +11,7 @@ public class Piece {
     int col;
     boolean moved;
 
-    public Piece(Color color, int row, int col){
+    public Piece(String display, Color color, int row, int col){
         this.color = color;
         this.row = row;
         this.col = col;
@@ -36,5 +37,13 @@ public class Piece {
     }
     public boolean canTravel(String oldPos, String newPos){
         return true;
+    }
+
+    public boolean isOccupied(){
+        return true;
+    }
+
+    public List<String> deepestMovesFrom(Piece pos){
+        return new ArrayList<String>();
     }
 }
