@@ -5,7 +5,7 @@ import chess.*;
 
 public class Board {
 
-    public static boolean isBlackTurn = true;
+    public static boolean isBlackTurn = false;
     public static int moveCount = 0;
     public static HashMap<String, Piece> ChessBoard = new HashMap<String, Piece>(64);
     //public static Piece[][] ChessBoard;
@@ -176,7 +176,7 @@ public class Board {
         return false; // TEMPORARY
     }
 
-    private static boolean isCheck (Color player) {
+    static boolean isCheck (Color player) {
         // Piece kingSquare = getKingSquare(player);
         // return isSquareUnderAttack(player, kingSquare);
         return false; // TEMPORARY
