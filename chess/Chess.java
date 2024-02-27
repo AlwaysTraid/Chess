@@ -42,7 +42,11 @@ class ReturnPlay {
 public class Chess {
 	
 	enum Player { white, black }
-	
+    private static Board board;
+
+    public Chess() {
+        board = new Board();
+    }
 	/**
 	 * Plays the next move for whichever player has the turn.
 	 * 
@@ -56,10 +60,20 @@ public class Chess {
 
 		/* FILL IN THIS METHOD */
 		
-		/* FOLLOWING LINE IS A PLACEHOLDER TO MAKE COMPILER HAPPY */
-		/* WHEN YOU FILL IN THIS METHOD, YOU NEED TO RETURN A ReturnPlay OBJECT */
-		return null;
-	}
+        ReturnPlay returnPlay = new ReturnPlay();
+        if (Board.isCheckmate(Color.WHITE)) {
+            returnPlay.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
+        } else if (Board.isCheckmate(Color.BLACK)) {
+            returnPlay.message = ReturnPlay.Message.CHECKMATE_BLACK_WINS;
+        } else if (Board.isCheck(Color.WHITE)) {
+            returnPlay.message = ReturnPlay.Message.CHECK;
+        } else if (Board.isCheck(Color.BLACK)) {
+            returnPlay.message = ReturnPlay.Message.CHECK;
+        } else {
+            returnPlay.message = ReturnPlay.Message.LEGAL_MOVE;
+        }
+        return returnPlay;
+    }
 	
 	
 	/**
