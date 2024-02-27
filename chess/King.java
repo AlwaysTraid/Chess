@@ -83,9 +83,60 @@ public class King extends Piece{
             }
         }
 
-        
+        // We Now Use Possible Moves And Use Board Function isCheck at each move
+        Board.ChessBoard.put(currentPos, new BlankSpace("  ", Color.WHITE, currentPos.charAt(0), currentPos.charAt(1))); //Temp Placement Of New Spot for IsCheck
+        if (color == Color.WHITE){
+            for (String pos: possibleMoves){
+                Piece tempPiece = Board.ChessBoard.get(pos);
+                if ((tempPiece.getColor() == Color.BLACK) && !(tempPiece instanceof BlankSpace)){ //If There IS a Piece on this spot and not a blank spot
+                    //Board.ChessBoard.put(pos, new BlankSpace("  ", Color.WHITE, pos.charAt(0), pos.charAt(1)));
+                    Board.ChessBoard.put(pos, this); //Place King In New Spot
+                    if(!Board.isCheck(color)){
+                        Board.ChessBoard.put(currentPos, this);
+                        Board.ChessBoard.put(pos, tempPiece);
+                        return false; // Able to move, not checkmate.
+                    }
+                    Board.ChessBoard.put(pos, tempPiece); // Reset, but IS still in check here
+                }
 
-        return false;
+                Board.ChessBoard.put(pos, this);
+                if (!(Board.isCheck(color))){
+                    Board.ChessBoard.put(currentPos, this);
+                    Board.ChessBoard.put(pos, tempPiece);
+                    return false; // Not in check at this location
+                }
+
+                //Reset In Case Of Both Cases Not Fulfilling
+                Board.ChessBoard.put(pos, tempPiece);
+            }
+        }else{ //When King is Color.BLACK
+            for (String pos: possibleMoves){
+                Piece tempPiece = Board.ChessBoard.get(pos);
+                if ((tempPiece.getColor() == Color.WHITE) && !(tempPiece instanceof BlankSpace)){ //If There IS a Piece on this spot and not a blank spot
+                    //Board.ChessBoard.put(pos, new BlankSpace("  ", Color.WHITE, pos.charAt(0), pos.charAt(1)));
+                    Board.ChessBoard.put(pos, this); //Place King In New Spot
+                    if(!Board.isCheck(color)){
+                        Board.ChessBoard.put(currentPos, this);
+                        Board.ChessBoard.put(pos, tempPiece);
+                        return false; // Able to move, not checkmate.
+                    }
+                    Board.ChessBoard.put(pos, tempPiece); // Reset, but IS still in check here
+                }
+
+                Board.ChessBoard.put(pos, this);
+                if (!(Board.isCheck(color))){
+                    Board.ChessBoard.put(currentPos, this);
+                    Board.ChessBoard.put(pos, tempPiece);
+                    return false; // Not in check at this location
+                }
+
+                //Reset In Case Of Both Cases Not Fulfilling
+                Board.ChessBoard.put(pos, tempPiece);
+            }
+        }
+
+
+        return true; //All tests have been made for white and black, no possible escape squares so it IS checkmate.
     }
     
 }
