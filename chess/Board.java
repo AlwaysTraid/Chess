@@ -176,7 +176,7 @@ public class Board {
         return false; // TEMPORARY
     }
 
-    private static boolean isCheck(Color player) {
+    private static boolean isCheck (Color player) {
         // Piece kingSquare = getKingSquare(player);
         // return isSquareUnderAttack(player, kingSquare);
         return false; // TEMPORARY
