@@ -111,6 +111,30 @@ public class Pawn extends Piece{
         }
     }
 
+    public boolean canTravel(String oldPos, String newPos){
+
+        char file1 = oldPos.charAt(0);
+        char file2 = newPos.charAt(0);
+        int rank1 = oldPos.charAt(1);
+        int rank2 = oldPos.charAt(1);
+
+        if (rank1 < rank2){ // White Pawns
+            for (int i = rank1+1; i <= rank2; i++){
+                if(isOccupied(file1, i)){
+                    return false;
+                }
+            }
+        }else{ // Black Pawns
+            for (int i = rank2; i <= rank1; i++){
+                if(isOccupied(file1, i)){
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
     public void move(String oldPos, String newPos){
         char file = oldPos.charAt(0);
         int rank = oldPos.charAt(1);
