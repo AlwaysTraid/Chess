@@ -4,7 +4,7 @@ import java.util.*;
 
 //Defines All Pieces In Chess
 
-public class Piece {
+public class Piece extends ReturnPiece{
     
     Color color;
     String display;
