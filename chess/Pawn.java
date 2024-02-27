@@ -37,6 +37,7 @@ public class Pawn extends Piece{
                     if(!canTravel(oldPos, newPos)){ //Something is blocking it
                         return false;
                     }
+                    setPassant(false); // Can No Longer En Passant
                     return true;
                 }
 
@@ -48,9 +49,21 @@ public class Pawn extends Piece{
                     if(!isOccupied(file2, rank2)){
                         return false; // Pawn tried taking an empty square
                     }
+                    String pos = Character.toString(file2) + Integer.toString(rank2);
+                    if(Board.ChessBoard.get(pos).getColor() == Color.WHITE){
+                        return false; // Tried Capturing Same Piece
+                    }
                     return true;
-                        
-                } 
+                }
+
+                if (Math.abs(file2 - file1) == 1){
+                    if(!canTravel(oldPos, newPos)){
+                        return false;
+                    }
+                    return true;
+                }
+
+                return false;
             }
         }else{
             //Piece is Color.BLACK // Black Pawns
