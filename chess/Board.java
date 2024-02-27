@@ -177,10 +177,13 @@ public class Board {
     // }
 
     public static boolean isCheckmate(Color player) {
+
+        String kingPos = getKingPosition(player);
+        Piece kingPiece = ChessBoard.get(kingPos);
+        return kingPiece.isInCheckmate(kingPos);
         // if (isCheck(player) && !hasLegalMoves(player)) {
         //     return true;
         // }
-        return false; // TEMPORARY
     }
 
     public static String getKingPosition(Color player){

@@ -51,4 +51,6 @@ public class Piece extends ReturnPiece{
     public List<String> deepestMovesFrom(Piece pos){
         return new ArrayList<String>();
     }
+
+    public boolean isInCheckmate(String pos) { return false; } //Necessary for King Class.
 }
