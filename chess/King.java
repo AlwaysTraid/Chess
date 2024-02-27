@@ -2,6 +2,8 @@ package chess;
 
 import chess.*;
 
+import java.util.ArrayList;
+
 public class King extends Piece{
     
     boolean canCastle;
@@ -47,6 +49,43 @@ public class King extends Piece{
         }else{
             Board.ChessBoard.put(oldPos, new BlankSpace("##", Color.BLACK, file, rank));
         }
+    }
+
+    public boolean isInCheckmate(String currentPos){
+
+        ArrayList<String> possibleMoves = new ArrayList<String>();
+
+        String topleft = Character.toString((char)(currentPos.charAt(0) - 1)) + (char)(((currentPos.charAt(1)-'0')+1)+'0');
+        possibleMoves.add(topleft);
+        String top = Character.toString((char)(currentPos.charAt(0) + 0)) + (char)(((currentPos.charAt(1)-'0')+1)+'0');
+        possibleMoves.add(top);
+        String topright = Character.toString((char)(currentPos.charAt(0) + 1)) + (char)(((currentPos.charAt(1)-'0')+1)+'0');
+        possibleMoves.add(topright);
+
+        String middleleft = Character.toString((char)(currentPos.charAt(0) - 1)) + (char)(((currentPos.charAt(1)-'0')+0)+'0');
+        possibleMoves.add(middleleft);
+        String middleright = Character.toString((char)(currentPos.charAt(0) + 1)) + (char)(((currentPos.charAt(1)-'0')+0)+'0');
+        possibleMoves.add(middleright);
+
+        String bottomleft = Character.toString((char)(currentPos.charAt(0) - 1)) + (char)(((currentPos.charAt(1)-'0')-1)+'0');
+        possibleMoves.add(bottomleft);
+        String bottommiddle = Character.toString((char)(currentPos.charAt(0) + 0)) + (char)(((currentPos.charAt(1)-'0')-1)+'0');
+        possibleMoves.add(bottommiddle);
+        String bottomright = Character.toString((char)(currentPos.charAt(0) + 1)) + (char)(((currentPos.charAt(1)-'0')-1)+'0');
+        possibleMoves.add(bottomright);
+
+        for (String move : possibleMoves){
+            if (!Board.ExistingSpotOnBoard(move)) { // Move doesn't exist on Board
+                possibleMoves.remove(move);
+            }
+            if (Board.ChessBoard.get(move).getColor() == color){ // Piece exists, but is same color as King
+                possibleMoves.remove(move);
+            }
+        }
+
+        
+
+        return false;
     }
     
 }

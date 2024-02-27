@@ -5,8 +5,11 @@ import chess.*;
 
 public class Board {
 
-    public static boolean isBlackTurn = false;
-    public static int moveCount = 0;
+    public static Color playersTurn = Color.WHITE;
+
+    public static ArrayList<ReturnPiece> returnPieceArrayList = new ArrayList<>();
+    public static ReturnPiece[][] chess_set = new ReturnPiece[8][8];
+
     public static HashMap<String, Piece> ChessBoard = new HashMap<String, Piece>(64);
     //public static Piece[][] ChessBoard;
 
@@ -40,73 +43,77 @@ public class Board {
         setupStandardBoard();
     }
 
-    public static Color GetMove(){
-        if (isBlackTurn){
-            return Color.BLACK;
-        }else{
-            return Color.WHITE;
-        }
-    }
-
     private static void setupStandardBoard() {
-        for(char file = 'a'; file <= 'h'; file++) {
-			for(int rank = 1; rank <= 8; rank++) {
+        for (char file = 'a'; file <= 'h'; file++) {
+            for (int rank = 1; rank <= 8; rank++) {
                 String position = Character.toString(file) + Integer.toString(rank);
 
                 //White Pawns
-                if (rank == 2){
+                if (rank == 2) {
                     ChessBoard.put(position, new Pawn("wp", Color.WHITE, file, rank, true));
                 }
                 //Black Pawns
-                else if(rank == 7){
+                else if (rank == 7) {
                     ChessBoard.put(position, new Pawn("bp", Color.BLACK, file, rank, true));
                 }
                 //White Rooks
-                else if((file == 'a' || file == 'h') && rank == 1){
+                else if ((file == 'a' || file == 'h') && rank == 1) {
                     ChessBoard.put(position, new Rook("wR", Color.WHITE, file, rank));
                 }
                 //Black Rooks
-                else if((file == 'a' || file == 'h') && rank == 8){
+                else if ((file == 'a' || file == 'h') && rank == 8) {
                     ChessBoard.put(position, new Rook("bR", Color.BLACK, file, rank));
                 }
                 //White Knights
-                else if((file == 'b' || file == 'g') && rank == 1){
+                else if ((file == 'b' || file == 'g') && rank == 1) {
                     ChessBoard.put(position, new Knight("wN", Color.WHITE, file, rank));
                 }
                 //Black Knights
-                else if((file == 'b' || file == 'g') && rank == 8){
+                else if ((file == 'b' || file == 'g') && rank == 8) {
                     ChessBoard.put(position, new Knight("bN", Color.BLACK, file, rank));
                 }
                 //White Bishops
-                else if((file == 'c' || file == 'f') && rank == 1){
+                else if ((file == 'c' || file == 'f') && rank == 1) {
                     ChessBoard.put(position, new Bishop("wB", Color.WHITE, file, rank));
                 }
                 //Black Bishops
-                else if((file == 'b' || file == 'g') && rank == 8){
+                else if ((file == 'b' || file == 'g') && rank == 8) {
                     ChessBoard.put(position, new Bishop("bB", Color.BLACK, file, rank));
                 }
                 //White Queen
-                else if(file == 'd' && rank == 1){
+                else if (file == 'd' && rank == 1) {
                     ChessBoard.put(position, new Queen("wQ", Color.WHITE, file, rank));
                 }
                 //Black Queen
-                else if(file == 'd' && rank == 8){
+                else if (file == 'd' && rank == 8) {
                     ChessBoard.put(position, new Queen("bQ", Color.BLACK, file, rank));
                 }
                 //White King
-                else if(file == 'd' && rank == 1){
+                else if (file == 'd' && rank == 1) {
                     ChessBoard.put(position, new King("wK", Color.WHITE, file, rank, true));
                 }
                 //Black King
-                else if(file == 'd' && rank == 8){
+                else if (file == 'd' && rank == 8) {
                     ChessBoard.put(position, new King("bK", Color.BLACK, file, rank, true));
                 }
             }
         }
     }
 
-    public static Color getMove() {
-        return (isBlackTurn) ? Color.BLACK : Color.WHITE;
+    public static Color GetMove(){
+        if (playersTurn == Color.BLACK){
+            return Color.BLACK;
+        }else{
+            return Color.WHITE;
+        }
+    }
+
+    public static void switchTurn(){
+        if(playersTurn == Color.WHITE){
+            playersTurn = Color.BLACK;
+        }else{
+            playersTurn = Color.WHITE;
+        }
     }
 
     public static Piece GetPiece(String pos) {
@@ -176,10 +183,40 @@ public class Board {
         return false; // TEMPORARY
     }
 
-    static boolean isCheck (Color player) {
-        // Piece kingSquare = getKingSquare(player);
-        // return isSquareUnderAttack(player, kingSquare);
-        return false; // TEMPORARY
+    public static String getKingPosition(Color player){
+        for(String pos: ChessBoard.keySet()){
+            Piece tempPiece = ChessBoard.get(pos);
+            if (player == Color.WHITE){
+                if (tempPiece instanceof King && tempPiece.getColor() == Color.WHITE){
+                    return pos;
+                }
+            }else{ //Piece is Color.BLACK
+                if (tempPiece instanceof King && tempPiece.getColor() == Color.BLACK){
+                    return pos;
+                }
+            }
+        }
+        return null; //No kings in board. If this happens, game has to be restarted.
+    }
+    public static boolean isCheck (Color player) {
+        String kingPos = getKingPosition(player);
+        if (player == Color.WHITE){
+            for (String pos: Board.ChessBoard.keySet()){
+                Piece tempPiece = Board.ChessBoard.get(pos);
+                if ((tempPiece.getColor() == Color.BLACK) && (tempPiece.ableToMove(pos, kingPos) && (tempPiece != Board.ChessBoard.get(kingPos)))){
+                    return true;
+                }
+            }
+            return false; // TEMPORARY
+        }else{ //When King is Color.BLACK
+            for (String pos: Board.ChessBoard.keySet()){
+                Piece tempPiece = Board.ChessBoard.get(pos);
+                if ((tempPiece.getColor() == Color.WHITE) && (tempPiece.ableToMove(pos, kingPos) && (tempPiece != Board.ChessBoard.get(kingPos)))){
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 
     // private static boolean hasLegalMoves(Color player) {
@@ -196,8 +233,12 @@ public class Board {
     //     }
     // }
 
-    public static void printBoard(){
-
+    public static boolean isBlankSpace(String pos){
+        if((ChessBoard.get(pos) instanceof BlankSpace)){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }

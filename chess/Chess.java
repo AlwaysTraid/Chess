@@ -55,7 +55,7 @@ public class Chess {
 		ReturnPlay response = new ReturnPlay();
 
 		if (args[0].equals("resign")) {
-			if (Board.isBlackTurn) {
+			if (Board.playersTurn == Color.BLACK) {
 				response.message = ReturnPlay.Message.CHECKMATE_WHITE_WINS;
 				return response;
 			} else {
