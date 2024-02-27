@@ -1,5 +1,6 @@
 package chess;
 
+// Contributors: Aryan Rejo (NetID: ar1856) & Sania Kumbhare(NetID: ssk208)
 import java.util.ArrayList;
 import chess.*;
 
