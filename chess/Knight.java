@@ -42,7 +42,17 @@ public class Knight extends Piece{
     }
 
     public void move(String oldPos, String newPos){
+        char file = oldPos.charAt(0);
+        int rank = oldPos.charAt(1);
+        Piece oldKnightPiece = Board.ChessBoard.get(oldPos);
+        Board.ChessBoard.put(newPos, oldKnightPiece); // Moves Knight To New Spot
         
+        //Change to either White/Black BlankSpace Piece
+        if(Board.getSquareColor(file, rank) == Color.WHITE){
+            Board.ChessBoard.put(oldPos, new BlankSpace("  ", Color.WHITE, file, rank));
+        }else{
+            Board.ChessBoard.put(oldPos, new BlankSpace("##", Color.BLACK, file, rank));
+        }
     }
     
 }
