@@ -169,17 +169,18 @@ public class Board {
     //     return legalMoves;
     // }
 
-    // public static boolean isCheckmate(Color player) {
-    //     if (isCheck(player) && !hasLegalMoves(player)) {
-    //         return true;
-    //     }
-    //     return false;
-    // }
+    public static boolean isCheckmate(Color player) {
+        // if (isCheck(player) && !hasLegalMoves(player)) {
+        //     return true;
+        // }
+        return false; // TEMPORARY
+    }
 
-    // private static boolean isCheck(Color player) {
-    //     Piece kingSquare = getKingSquare(player);
-    //     return isSquareUnderAttack(player, kingSquare);
-    // }
+    private static boolean isCheck(Color player) {
+        // Piece kingSquare = getKingSquare(player);
+        // return isSquareUnderAttack(player, kingSquare);
+        return false; // TEMPORARY
+    }
 
     // private static boolean hasLegalMoves(Color player) {
     //     List<Move> legalMoves = getLegalMoves(player);
