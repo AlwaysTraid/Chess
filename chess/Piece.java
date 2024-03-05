@@ -4,7 +4,7 @@ import java.util.*;
 
 //Defines All Pieces In Chess
 
-public class Piece {
+public class Piece extends ReturnPiece{
     
     Color color;
     String display;
@@ -51,4 +51,6 @@ public class Piece {
     public List<String> deepestMovesFrom(Piece pos){
         return new ArrayList<String>();
     }
+
+    public boolean isInCheckmate(String pos) { return false; } //Necessary for King Class.
 }
